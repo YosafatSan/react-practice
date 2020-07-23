@@ -1,0 +1,10 @@
+.app {
+  background: skyblue;
+  padding: 30px;
+  height: auto;
+}
+
+.photho-card {
+  border-radius: 4px;
+  padding: 20px;
+}
