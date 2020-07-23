@@ -1,4 +1,7 @@
-export const mortyAttack = () => fetch('https://rickandmortyapi.com/api/character/1,2,3,4,5,6')
+export const getCards = () => fetch('https://rickandmortyapi.com/api/character/1,2,6,7,14,15')
     .then( resp => resp.json())
     .catch( err => console.log(err));
+
+export const filterResults = ( filterSpecie, allCards ) => allCards.filter( card => card.species.includes(filterSpecie));
+
 

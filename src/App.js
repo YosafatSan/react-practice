@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PhotoCard from "./components/PhotoCard";
 import "./styles/App.css";
-import { mortyAttack } from "./utils/api";
+import {filterResults, getCards} from "./utils/api";
+import SpeciesFilter from "./components/SpeciesFilter";
 
 function App() {
   const [cards, setCards] = useState([]);
+  const [filter, setFilter] = useState('');
 
   useEffect(async () => {
-    const response = await mortyAttack();
+    let response = await getCards();
+    if (filter !== '') response = filterResults(filter, response);
+
     const newCards = response.map( ({ name, status, species, image }) => (
         {
           title: name,
@@ -17,7 +21,11 @@ function App() {
     ));
 
     setCards(newCards);
-  }, []);
+  }, [filter]);
+
+  const newFilter = () => {
+    setFilter(document.getElementById("species-filter").value);
+  }
 
   const photoCards = cards.map((card) => (
       <PhotoCard
@@ -31,6 +39,9 @@ function App() {
   return (
       <div className="app">
         <div className="card-deck">
+          <SpeciesFilter
+              newFilter={ newFilter }
+          />
           { photoCards }
         </div>
       </div>
