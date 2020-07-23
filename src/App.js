@@ -1,51 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PhotoCard from "./components/PhotoCard";
 import "./styles/App.css";
-import testImg from "./img/test.png";
+import { mortyAttack } from "./utils/api";
 
 function App() {
-  const [cards, setCards] = useState([
-    {
-      title: "Learn about React",
-      text: "This exercise is making me learn",
-      img: testImg,
-    },
-    {
-      title: "Why react",
-      text: "Because is so interesting",
-      img: testImg,
-    },
-    {
-      title: "Interesting? that sounds boring",
-      text: "But is not, I just created one component",
-      img: testImg,
-    },
-    {
-      title: "One? but you have more than one card photo",
-      text: "Yep! thats the magic :D",
-      img: testImg,
-    },
-    {
-      title: "Wow React its good then",
-      text: "Yes! Lets practice more",
-      img: testImg,
-    },
-    {
-      title: "Lets keep learning!",
-      text: "LETS GO!",
-      img: testImg,
-    }
-  ]);
+  const [cards, setCards] = useState([]);
+
+  useEffect(async () => {
+    const response = await mortyAttack();
+    const newCards = response.map( ({ name, status, species, image }) => (
+        {
+          title: name,
+          text: `${status} ${species}`,
+          img: image,
+        }
+    ));
+
+    setCards(newCards);
+  }, []);
+
+  const photoCards = cards.map((card) => (
+      <PhotoCard
+          key={ card.title + card.text }
+          title={ card.title}
+          text={ card.text }
+          imgURL={ card.img }
+      />
+  ));
 
   return (
       <div className="app">
         <div className="card-deck">
-          {cards.map((card, index) => (
-              <PhotoCard
-                  card={card}
-                  index={index}
-              />
-          ))}
+          { photoCards }
         </div>
       </div>
   );
