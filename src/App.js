@@ -10,7 +10,7 @@ function App() {
 
   useEffect(async () => {
     let response = await getCards();
-    if (filter !== '') response = filterResults(filter, response);
+    if (filter !== '') { response = filterResults(filter, response); };
 
     const newCards = response.map( ({ name, status, species, image }) => (
         {
@@ -23,8 +23,8 @@ function App() {
     setCards(newCards);
   }, [filter]);
 
-  const newFilter = () => {
-    setFilter(document.getElementById("species-filter").value);
+  const newFilter = ( value ) => {
+    setFilter(value);
   }
 
   const photoCards = cards.map((card) => (
@@ -40,7 +40,7 @@ function App() {
       <div className="app">
         <div className="card-deck">
           <SpeciesFilter
-              newFilter={ newFilter }
+              onFilterChange={ newFilter }
           />
           { photoCards }
         </div>
