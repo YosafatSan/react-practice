@@ -14,7 +14,7 @@ function SpeciesFilter({ onFilterChange }) {
             <div className="input-group-prepend">
                 <span className="input-group-text" id="basic-addon3">Filter Specie</span>
             </div>
-            <input type="text" ref={ textInput } name="species-filter" onChange={ onChangeHandler } className="form-control" id="species-filter" aria-describedby="basic-addon3" />
+            <input type="text" ref={ textInput } name="species-filter" onChange={ onChangeHandler } className="form-control" id="species-filter" aria-describedby="basic-addon3" placeholder="Human or Alien" />
         </div>
         );
 }
